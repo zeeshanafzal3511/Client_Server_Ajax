@@ -107,11 +107,20 @@
                 dataa[this.value] = $(this).parent().next().next().children().val();
             }
         });
-        if (dataa.length == 0) {
-            alert('Please fill out all fields');
-            return false;
-        }
-
+         var error = false;
+         $("[id^=subjectMarksObtained]").each(function (index, element) {
+            if ($(this).val() == "") {
+                 error = true;
+                return false;
+            }
+        });
+        $("[id^=subjectName]").each(function (index, element) {
+            if ($(this).val() == "") {
+                 error = true;
+                return false;
+            }
+        });
+         if (!error) {
         $.ajax({
             type:'post',
             url: 'server.php',
@@ -134,6 +143,10 @@
                 alert('Oops something went wrong');
             }
         });
+		 }
+     else{
+                alert('Please fill out all fields');
+     }
     });
 
     function UIPopulate() {
@@ -152,7 +165,8 @@
             h += '</td>';
 
             h += '<td>';
-            h += '<input type="text" id="subjectName' + i + '"/>';
+            h += '<input type="text" class="subjectName" id="subjectName' + i + '"/>';
+
             h += '</td>';
 
             h += '<td>';
@@ -160,7 +174,7 @@
             h += '</td>';
 
             h += '<td>';
-            h += '<input type="number" min="0" max="100" id="subjectMarksObtained' + i + '"/>';
+            h += '<input type="number" min="0" max="100" class="subjectName" id="subjectMarksObtained' + i + '"/>';
             h += '</td>';
 
             h += '</tr>';
